@@ -31,6 +31,11 @@ export default class Main {
             this.place_splitters()
             this.calc_heights()
 
+            // Track changes of grids count
+            this.tv.$watch(x =>
+                this.dc.get('.').map(x => x.id),
+                this.ongrids.bind(this))
+
         })
 
     }
@@ -44,6 +49,11 @@ export default class Main {
 
     // Extension settings has changed
     onsettings(sett) {}
+
+    ongrids() {
+        this.remove_widgets()
+        this.place_splitters()
+    }
 
     onmousemove(e) {
         // List of widgets created by this controller
@@ -76,7 +86,6 @@ export default class Main {
     }
 
     place_splitters() {
-        // TODO: replace splitters on data update
         let grids = this.tv.$refs.chart._layout.grids
         for (var i = 1; i < grids.length; i++) {
             let g1 = grids[i-1]
@@ -120,8 +129,10 @@ export default class Main {
         return list
     }
 
-    remove_widget(id) {
-        // ...
+    remove_widgets() {
+        for (var id in this.widgets) {
+            this.tv.$delete(this.widgets, id)
+        }
     }
 
     destroy() {

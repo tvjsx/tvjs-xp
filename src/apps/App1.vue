@@ -32,7 +32,7 @@ export default {
     mounted() {
         window.addEventListener('resize', this.onResize)
         this.onResize()
-        window.dc = this.chart
+        window.dc = this.dc
         window.tv = this.$refs.tvjs
     },
     computed: {
