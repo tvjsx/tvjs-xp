@@ -1,4 +1,8 @@
 
+<div align="center">
+  <img width="318" heigth="256" src="https://raw.githubusercontent.com/tvjsx/tvjs-xp/main/assets/logo.png" alt="tvjs-xp logo">
+</div>
+
 
 # TVJS Std Extension Pack
 

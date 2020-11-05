@@ -19,6 +19,7 @@ export default class Main {
             case 'legend-button-click':
                 let id = `SettingsWin-${Utils.uuid2()}`
                 let args = e.args[0]
+                if (args.button !== 'settings') break
                 try {
                     let ov = this.dc.data[args.type][args.dataIndex]
                     let f = Object.values(this.widgets)

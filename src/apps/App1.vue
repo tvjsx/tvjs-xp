@@ -2,7 +2,7 @@
     <trading-vue :data="dc" :width="this.width" :height="this.height"
         title-txt="TVJS XP" :key="resetkey"
         ref="tvjs"
-        :legend-buttons="['settings']"
+        :legend-buttons="['settings', 'display']"
         :chart-config="{DEFAULT_LEN:70}"
         :color-back="colors.colorBack"
         :color-grid="colors.colorGrid"
