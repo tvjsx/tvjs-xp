@@ -9,6 +9,7 @@
 
 import ChartLink from '../build/chart-link/chart-link.js'
 import GridResize from '../build/grid-resize/grid-resize.js'
+import LegendButtons from '../build/legend-buttons/legend-buttons.js'
 import SettingsWin from '../build/settings-win/settings-win.js'
 
 
@@ -16,6 +17,7 @@ import SettingsWin from '../build/settings-win/settings-win.js'
 const Pack = {
     'chart-link': ChartLink,
     'grid-resize': GridResize,
+    'legend-buttons': LegendButtons,
     'settings-win': SettingsWin
 }
 

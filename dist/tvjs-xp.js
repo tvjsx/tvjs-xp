@@ -1,5 +1,5 @@
 /*!
- * TVJS Std Extension Pack - v0.1.0 - Fri Oct 16 2020
+ * TVJS Std Extension Pack - v0.2.0 - Fri Nov 06 2020
  *     https://github.com/tvjsx/tvjs-xp
  *     Copyright (c) 2020 c451 Code's All Right;
  *     Licensed under the MIT license
@@ -164,7 +164,7 @@ module.exports = _unsupportedIterableToArray;
 
 /***/ }),
 
-/***/ 192:
+/***/ 552:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -946,7 +946,14 @@ var main_Main = /*#__PURE__*/function () {
 
       _this.place_splitters();
 
-      _this.calc_heights();
+      _this.calc_heights(); // Track changes of grids count
+
+
+      _this.tv.$watch(function (x) {
+        return _this.dc.get('.').map(function (x) {
+          return x.id;
+        });
+      }, _this.ongrids.bind(_this));
     });
   } // Listens to all tvjs events, creates new widgets
 
@@ -960,6 +967,12 @@ var main_Main = /*#__PURE__*/function () {
   }, {
     key: "onsettings",
     value: function onsettings(sett) {}
+  }, {
+    key: "ongrids",
+    value: function ongrids() {
+      this.remove_widgets();
+      this.place_splitters();
+    }
   }, {
     key: "onmousemove",
     value: function onmousemove(e) {
@@ -1035,7 +1048,6 @@ var main_Main = /*#__PURE__*/function () {
   }, {
     key: "place_splitters",
     value: function place_splitters() {
-      // TODO: replace splitters on data update
       var grids = this.tv.$refs.chart._layout.grids;
 
       for (var i = 1; i < grids.length; i++) {
@@ -1112,8 +1124,11 @@ var main_Main = /*#__PURE__*/function () {
       return list;
     }
   }, {
-    key: "remove_widget",
-    value: function remove_widget(id) {// ...
+    key: "remove_widgets",
+    value: function remove_widgets() {
+      for (var id in this.widgets) {
+        this.tv.$delete(this.widgets, id);
+      }
     }
   }, {
     key: "destroy",
@@ -1151,6 +1166,514 @@ var grid_resize_Pack = {
   Main: main_Main
 };
 /* harmony default export */ const grid_resize = (grid_resize_Pack);
+
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/extensions/legend-buttons/AddWin.vue?vue&type=template&id=53408ac7&scoped=true&
+var AddWinvue_type_template_id_53408ac7_scoped_true_render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "window",
+    {
+      staticClass: "add-win",
+      attrs: { title: "Add Overlay", tv: _vm.tv },
+      on: { close: _vm.on_close }
+    },
+    [
+      _c(
+        "div",
+        { staticClass: "add-win-list" },
+        _vm._l(_vm.ovs, function(ov) {
+          return _c(
+            "div",
+            {
+              staticClass: "add-win-item",
+              on: {
+                click: function($event) {
+                  return _vm.on_click(ov.name)
+                }
+              }
+            },
+            [
+              _c("span", [_vm._v(_vm._s(ov.name))]),
+              _vm._v(" "),
+              _c("span", { staticClass: "add-win-item-desc" }, [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(ov.methods.meta_info().desc) +
+                    "\n            "
+                )
+              ])
+            ]
+          )
+        }),
+        0
+      )
+    ]
+  )
+}
+var AddWinvue_type_template_id_53408ac7_scoped_true_staticRenderFns = []
+AddWinvue_type_template_id_53408ac7_scoped_true_render._withStripped = true
+
+
+// CONCATENATED MODULE: ./src/extensions/legend-buttons/AddWin.vue?vue&type=template&id=53408ac7&scoped=true&
+
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/Window.vue?vue&type=template&id=5b030a20&
+var Windowvue_type_template_id_5b030a20_render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { ref: "win", staticClass: "tvjs-x-window", style: _vm.style },
+    [
+      _c("div", { staticClass: "tvjs-x-window-head" }, [
+        _c(
+          "div",
+          {
+            staticClass: "tvjs-x-window-title",
+            on: { mousedown: _vm.onMouseDown }
+          },
+          [_vm._v("\n            " + _vm._s(_vm.title) + "\n        ")]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "tvjs-x-window-close",
+            on: {
+              click: function($event) {
+                return _vm.$emit("close")
+              }
+            }
+          },
+          [_vm._v("\n            ╳\n        ")]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "tvjs-x-window-body" }, [_vm._t("default")], 2)
+    ]
+  )
+}
+var Windowvue_type_template_id_5b030a20_staticRenderFns = []
+Windowvue_type_template_id_5b030a20_render._withStripped = true
+
+
+// CONCATENATED MODULE: ./src/components/Window.vue?vue&type=template&id=5b030a20&
+
+// CONCATENATED MODULE: ./src/components/dragg.js
+/* harmony default export */ const dragg = ({
+  methods: {
+    onMouseDown: function onMouseDown(e) {
+      e = e || window.event;
+      e.preventDefault();
+      this.drag.offset_x = e.clientX - this.x;
+      this.drag.offset_y = e.clientY - this.y;
+      document.onmouseup = this.stopdrag;
+      document.onmousemove = this.ondrag;
+    },
+    ondrag: function ondrag(e) {
+      e = e || window.event;
+      e.preventDefault();
+      this.x = e.clientX - this.drag.offset_x;
+      this.y = e.clientY - this.drag.offset_y;
+    },
+    stopdrag: function stopdrag() {
+      document.onmouseup = null;
+      document.onmousemove = null;
+    }
+  },
+  data: function data() {
+    return {
+      drag: {
+        offset_x: 0,
+        offset_y: 0
+      }
+    };
+  }
+});
+// CONCATENATED MODULE: ./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/Window.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const Windowvue_type_script_lang_js_ = ({
+  name: 'Window',
+  mixins: [dragg],
+  props: ['title', 'tv'],
+  mounted: function mounted() {
+    this.ww = this.$refs.win.clientWidth;
+    this.wh = this.$refs.win.clientHeight;
+    this.x = this.tvw * 0.5 - this.ww * 0.5;
+    this.y = this.tvh * 0.5 - this.wh * 0.5;
+  },
+  computed: {
+    style: function style() {
+      return {
+        top: "".concat(this.y, "px"),
+        left: "".concat(this.x, "px")
+      };
+    },
+    tvw: function tvw() {
+      return this.$props.tv.width;
+    },
+    tvh: function tvh() {
+      return this.$props.tv.height;
+    }
+  },
+  data: function data() {
+    return {
+      ww: 0,
+      wh: 0,
+      x: 0,
+      y: 0
+    };
+  }
+});
+// CONCATENATED MODULE: ./src/components/Window.vue?vue&type=script&lang=js&
+ /* harmony default export */ const components_Windowvue_type_script_lang_js_ = (Windowvue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./node_modules/vue-style-loader/index.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/Window.vue?vue&type=style&index=0&lang=css&
+var Windowvue_type_style_index_0_lang_css_ = __webpack_require__(144);
+// CONCATENATED MODULE: ./src/components/Window.vue?vue&type=style&index=0&lang=css&
+ /* harmony default export */ const components_Windowvue_type_style_index_0_lang_css_ = ((/* unused pure expression or super */ null && (mod))); 
+// CONCATENATED MODULE: ./src/components/Window.vue
+
+
+
+
+
+
+/* normalize component */
+
+var Window_component = normalizeComponent(
+  components_Windowvue_type_script_lang_js_,
+  Windowvue_type_template_id_5b030a20_render,
+  Windowvue_type_template_id_5b030a20_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var Window_api; }
+Window_component.options.__file = "src/components/Window.vue"
+/* harmony default export */ const Window = (Window_component.exports);
+// CONCATENATED MODULE: ./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/extensions/legend-buttons/AddWin.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const AddWinvue_type_script_lang_js_ = ({
+  name: 'AddWin',
+  props: ['id', 'main', 'dc', 'tv', 'data'],
+  components: {
+    Window: Window
+  },
+  mounted: function mounted() {},
+  methods: {
+    on_close: function on_close() {
+      this.$props.main.remove_widget(this.$props.id);
+    },
+    on_click: function on_click(name) {
+      this.on_close();
+      this.main.add_overlay({
+        side: this.data.type,
+        index: this.data.index,
+        type: name
+      });
+    }
+  },
+  computed: {
+    sett: function sett() {
+      return this.$props.data.ov.settings;
+    }
+  },
+  data: function data() {
+    return {
+      ovs: this.tv.overlays.filter(function (x) {
+        return x.methods.calc;
+      })
+    };
+  }
+});
+// CONCATENATED MODULE: ./src/extensions/legend-buttons/AddWin.vue?vue&type=script&lang=js&
+ /* harmony default export */ const legend_buttons_AddWinvue_type_script_lang_js_ = (AddWinvue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./node_modules/vue-style-loader/index.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/extensions/legend-buttons/AddWin.vue?vue&type=style&index=0&id=53408ac7&scoped=true&lang=css&
+var AddWinvue_type_style_index_0_id_53408ac7_scoped_true_lang_css_ = __webpack_require__(153);
+// CONCATENATED MODULE: ./src/extensions/legend-buttons/AddWin.vue?vue&type=style&index=0&id=53408ac7&scoped=true&lang=css&
+ /* harmony default export */ const legend_buttons_AddWinvue_type_style_index_0_id_53408ac7_scoped_true_lang_css_ = ((/* unused pure expression or super */ null && (mod))); 
+// CONCATENATED MODULE: ./src/extensions/legend-buttons/AddWin.vue
+
+
+
+
+
+
+/* normalize component */
+
+var AddWin_component = normalizeComponent(
+  legend_buttons_AddWinvue_type_script_lang_js_,
+  AddWinvue_type_template_id_53408ac7_scoped_true_render,
+  AddWinvue_type_template_id_53408ac7_scoped_true_staticRenderFns,
+  false,
+  null,
+  "53408ac7",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var AddWin_api; }
+AddWin_component.options.__file = "src/extensions/legend-buttons/AddWin.vue"
+/* harmony default export */ const AddWin = (AddWin_component.exports);
+// CONCATENATED MODULE: ./src/extensions/legend-buttons/main.js
+
+
+
+function legend_buttons_main_createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = legend_buttons_main_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function legend_buttons_main_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return legend_buttons_main_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return legend_buttons_main_arrayLikeToArray(o, minLen); }
+
+function legend_buttons_main_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+// Extension's controller
+
+
+
+
+var legend_buttons_main_Main = /*#__PURE__*/function () {
+  function Main(tv, dc, sett) {
+    classCallCheck_default()(this, Main);
+
+    this.widgets = {};
+    this.tv = tv;
+    this.dc = dc;
+    this.sett = sett;
+  } // Listens to all tvjs events, creates new widgets
+
+
+  createClass_default()(Main, [{
+    key: "update",
+    value: function update(e) {
+      switch (e.event) {
+        case 'legend-button-click':
+          this.onbutton(e.args[0]);
+          break;
+      }
+    }
+  }, {
+    key: "onbutton",
+    value: function onbutton(e) {
+      var ov = this.dc.get(e.type)[e.dataIndex];
+      var onchart = this.dc.data.onchart;
+      var offchart = this.dc.data.offchart;
+      if (!ov) return;
+
+      switch (e.button) {
+        case 'display':
+          if (ov.settings.display === undefined) {
+            var flag = false;
+          } else {
+            flag = !ov.settings.display;
+          }
+
+          this.tv.$set(ov.settings, 'display', flag);
+          break;
+
+        case 'up':
+          if (e.type === 'offchart') {
+            if (e.dataIndex === 0) {
+              offchart.splice(e.dataIndex, 1);
+              onchart.push(ov);
+            } else {
+              var data = offchart;
+              var i0 = e.dataIndex;
+              var i1 = e.dataIndex - 1;
+              data[i0] = data.splice(i1, 1, data[i0])[0];
+            }
+          }
+
+          this.dc.update_ids();
+          break;
+
+        case 'down':
+          if (e.type === 'onchart') {
+            var h = this.avg_grid_h(offchart);
+            onchart.splice(e.dataIndex, 1);
+            offchart.unshift(ov);
+            this.tv.$set(ov, 'grid', {
+              height: h
+            });
+          } else {
+            var n = offchart.length;
+            var _data = offchart;
+
+            if (e.dataIndex < n - 1) {
+              var _i = e.dataIndex;
+
+              var _i2 = e.dataIndex + 1;
+
+              _data[_i] = _data.splice(_i2, 1, _data[_i])[0];
+            }
+          }
+
+          this.dc.update_ids();
+          break;
+
+        case 'add':
+          try {
+            var id = "AddWin-".concat(external_trading_vue_js_.Utils.uuid2());
+            var _ov = this.dc.data[e.type][e.dataIndex];
+            var f = Object.values(this.widgets).find(function (x) {
+              return x.data.ov === _ov;
+            });
+
+            if (f) {
+              this.tv.$delete(this.widgets, f.id);
+              break;
+            }
+
+            this.tv.$set(this.widgets, id, {
+              id: id,
+              cls: AddWin,
+              data: {
+                ov: _ov,
+                type: e.type,
+                index: e.dataIndex
+              }
+            });
+          } catch (e) {
+            console.log(e);
+          }
+
+          break;
+
+        case 'remove':
+          this.dc.data[e.type].splice(e.dataIndex, 1);
+          this.dc.update_ids();
+          break;
+      }
+    } // Called from AddWin.vue
+
+  }, {
+    key: "add_overlay",
+    value: function add_overlay(e) {
+      var onchart = this.dc.data.onchart;
+      var offchart = this.dc.data.offchart;
+
+      if (e.side === 'onchart') {
+        onchart.splice(e.index + 1, 0, {
+          type: e.type,
+          data: [],
+          settings: {}
+        });
+      } else {
+        var h = this.avg_grid_h(offchart);
+        offchart.splice(e.index + 1, 0, {
+          type: e.type,
+          data: [],
+          settings: {},
+          grid: {
+            height: h
+          }
+        });
+      }
+
+      this.dc.update_ids();
+    } // Extension settings has changed
+
+  }, {
+    key: "onsettings",
+    value: function onsettings(sett) {}
+  }, {
+    key: "avg_grid_h",
+    value: function avg_grid_h(ovs) {
+      if (!ovs.length) return 0.25;
+      var gh = 0;
+
+      var _iterator = legend_buttons_main_createForOfIteratorHelper(ovs),
+          _step;
+
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var ov = _step.value;
+
+          if (ov.grid && typeof ov.grid.height === 'number') {
+            gh += ov.grid.height;
+          }
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+
+      return gh / ovs.length;
+    }
+  }, {
+    key: "remove_widget",
+    value: function remove_widget(id) {
+      this.tv.$delete(this.widgets, id);
+    }
+  }, {
+    key: "destroy",
+    value: function destroy() {}
+  }]);
+
+  return Main;
+}();
+
+
+// CONCATENATED MODULE: ./build/legend-buttons/legend-buttons.js
+// -------- Production extension index ---------
+//      ! THIS FILE WAS AUTO-GENERATED !
+//
+// Do not commit this file, the final index is
+// compiled by the repo owner, use index_dev.js to
+// experiment: 'npm run compile'
+
+legend_buttons_main_Main.__name__ = 'legend-buttons';
+var legend_buttons_widgets = {};
+var legend_buttons_components = {};
+var legend_buttons_overlays = {};
+var legend_buttons_colorpacks = {};
+var legend_buttons_skins = {};
+var legend_buttons_Pack = {
+  widgets: legend_buttons_widgets,
+  components: legend_buttons_components,
+  overlays: legend_buttons_overlays,
+  colorpacks: legend_buttons_colorpacks,
+  skins: legend_buttons_skins,
+  Main: legend_buttons_main_Main
+};
+/* harmony default export */ const legend_buttons = (legend_buttons_Pack);
 
 // CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/extensions/settings-win/SettingsWin.vue?vue&type=template&id=5d223b0e&scoped=true&
 var SettingsWinvue_type_template_id_5d223b0e_scoped_true_render = function() {
@@ -1204,171 +1727,15 @@ SettingsWinvue_type_template_id_5d223b0e_scoped_true_render._withStripped = true
 var defineProperty = __webpack_require__(713);
 var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty);
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/extensions/settings-win/Window.vue?vue&type=template&id=cc8bcfaa&
-var Windowvue_type_template_id_cc8bcfaa_render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { ref: "win", staticClass: "tvjs-x-window", style: _vm.style },
-    [
-      _c("div", { staticClass: "tvjs-x-window-head" }, [
-        _c(
-          "div",
-          {
-            staticClass: "tvjs-x-window-title",
-            on: { mousedown: _vm.onMouseDown }
-          },
-          [_vm._v("\n            " + _vm._s(_vm.title) + "\n        ")]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "tvjs-x-window-close",
-            on: {
-              click: function($event) {
-                return _vm.$emit("close")
-              }
-            }
-          },
-          [_vm._v("\n            ╳\n        ")]
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "tvjs-x-window-body" }, [_vm._t("default")], 2)
-    ]
-  )
-}
-var Windowvue_type_template_id_cc8bcfaa_staticRenderFns = []
-Windowvue_type_template_id_cc8bcfaa_render._withStripped = true
-
-
-// CONCATENATED MODULE: ./src/extensions/settings-win/Window.vue?vue&type=template&id=cc8bcfaa&
-
-// CONCATENATED MODULE: ./src/extensions/settings-win/dragg.js
-/* harmony default export */ const dragg = ({
-  methods: {
-    onMouseDown: function onMouseDown(e) {
-      e = e || window.event;
-      e.preventDefault();
-      this.drag.offset_x = e.clientX - this.x;
-      this.drag.offset_y = e.clientY - this.y;
-      document.onmouseup = this.stopdrag;
-      document.onmousemove = this.ondrag;
-    },
-    ondrag: function ondrag(e) {
-      e = e || window.event;
-      e.preventDefault();
-      this.x = e.clientX - this.drag.offset_x;
-      this.y = e.clientY - this.drag.offset_y;
-    },
-    stopdrag: function stopdrag() {
-      document.onmouseup = null;
-      document.onmousemove = null;
-    }
-  },
-  data: function data() {
-    return {
-      drag: {
-        offset_x: 0,
-        offset_y: 0
-      }
-    };
-  }
-});
-// CONCATENATED MODULE: ./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/extensions/settings-win/Window.vue?vue&type=script&lang=js&
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ const Windowvue_type_script_lang_js_ = ({
-  name: 'Window',
-  mixins: [dragg],
-  props: ['title', 'tv'],
-  mounted: function mounted() {
-    this.ww = this.$refs.win.clientWidth;
-    this.wh = this.$refs.win.clientHeight;
-    this.x = this.tvw * 0.5 - this.ww * 0.5;
-    this.y = this.tvh * 0.5 - this.wh * 0.5;
-  },
-  computed: {
-    style: function style() {
-      return {
-        top: "".concat(this.y, "px"),
-        left: "".concat(this.x, "px")
-      };
-    },
-    tvw: function tvw() {
-      return this.$props.tv.width;
-    },
-    tvh: function tvh() {
-      return this.$props.tv.height;
-    }
-  },
-  data: function data() {
-    return {
-      ww: 0,
-      wh: 0,
-      x: 0,
-      y: 0
-    };
-  }
-});
-// CONCATENATED MODULE: ./src/extensions/settings-win/Window.vue?vue&type=script&lang=js&
- /* harmony default export */ const settings_win_Windowvue_type_script_lang_js_ = (Windowvue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./node_modules/vue-style-loader/index.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/extensions/settings-win/Window.vue?vue&type=style&index=0&lang=css&
-var Windowvue_type_style_index_0_lang_css_ = __webpack_require__(491);
-// CONCATENATED MODULE: ./src/extensions/settings-win/Window.vue?vue&type=style&index=0&lang=css&
- /* harmony default export */ const settings_win_Windowvue_type_style_index_0_lang_css_ = ((/* unused pure expression or super */ null && (mod))); 
-// CONCATENATED MODULE: ./src/extensions/settings-win/Window.vue
-
-
-
-
-
-
-/* normalize component */
-
-var Window_component = normalizeComponent(
-  settings_win_Windowvue_type_script_lang_js_,
-  Windowvue_type_template_id_cc8bcfaa_render,
-  Windowvue_type_template_id_cc8bcfaa_staticRenderFns,
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var Window_api; }
-Window_component.options.__file = "src/extensions/settings-win/Window.vue"
-/* harmony default export */ const Window = (Window_component.exports);
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/extensions/settings-win/StdInput.vue?vue&type=template&id=696a593c&
-var StdInputvue_type_template_id_696a593c_render = function() {
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/StdInput.vue?vue&type=template&id=5e1f1c17&
+var StdInputvue_type_template_id_5e1f1c17_render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("span", [
     _vm.type === "text" || !_vm.type
       ? _c("input", {
-          staticClass: "std-input",
+          staticClass: "tvjs-std-input",
           style: _vm.style,
           attrs: { placeholder: _vm.name },
           domProps: { value: _vm.value },
@@ -1385,7 +1752,7 @@ var StdInputvue_type_template_id_696a593c_render = function() {
       ? _c(
           "select",
           {
-            staticClass: "std-input",
+            staticClass: "tvjs-std-input",
             style: _vm.style,
             domProps: { value: _vm.value },
             on: {
@@ -1402,13 +1769,13 @@ var StdInputvue_type_template_id_696a593c_render = function() {
       : _vm._e()
   ])
 }
-var StdInputvue_type_template_id_696a593c_staticRenderFns = []
-StdInputvue_type_template_id_696a593c_render._withStripped = true
+var StdInputvue_type_template_id_5e1f1c17_staticRenderFns = []
+StdInputvue_type_template_id_5e1f1c17_render._withStripped = true
 
 
-// CONCATENATED MODULE: ./src/extensions/settings-win/StdInput.vue?vue&type=template&id=696a593c&
+// CONCATENATED MODULE: ./src/components/StdInput.vue?vue&type=template&id=5e1f1c17&
 
-// CONCATENATED MODULE: ./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/extensions/settings-win/StdInput.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/StdInput.vue?vue&type=script&lang=js&
 //
 //
 //
@@ -1440,13 +1807,13 @@ StdInputvue_type_template_id_696a593c_render._withStripped = true
     return {};
   }
 });
-// CONCATENATED MODULE: ./src/extensions/settings-win/StdInput.vue?vue&type=script&lang=js&
- /* harmony default export */ const settings_win_StdInputvue_type_script_lang_js_ = (StdInputvue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./node_modules/vue-style-loader/index.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/extensions/settings-win/StdInput.vue?vue&type=style&index=0&lang=css&
-var StdInputvue_type_style_index_0_lang_css_ = __webpack_require__(843);
-// CONCATENATED MODULE: ./src/extensions/settings-win/StdInput.vue?vue&type=style&index=0&lang=css&
- /* harmony default export */ const settings_win_StdInputvue_type_style_index_0_lang_css_ = ((/* unused pure expression or super */ null && (mod))); 
-// CONCATENATED MODULE: ./src/extensions/settings-win/StdInput.vue
+// CONCATENATED MODULE: ./src/components/StdInput.vue?vue&type=script&lang=js&
+ /* harmony default export */ const components_StdInputvue_type_script_lang_js_ = (StdInputvue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./node_modules/vue-style-loader/index.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/StdInput.vue?vue&type=style&index=0&lang=css&
+var StdInputvue_type_style_index_0_lang_css_ = __webpack_require__(92);
+// CONCATENATED MODULE: ./src/components/StdInput.vue?vue&type=style&index=0&lang=css&
+ /* harmony default export */ const components_StdInputvue_type_style_index_0_lang_css_ = ((/* unused pure expression or super */ null && (mod))); 
+// CONCATENATED MODULE: ./src/components/StdInput.vue
 
 
 
@@ -1456,9 +1823,9 @@ var StdInputvue_type_style_index_0_lang_css_ = __webpack_require__(843);
 /* normalize component */
 
 var StdInput_component = normalizeComponent(
-  settings_win_StdInputvue_type_script_lang_js_,
-  StdInputvue_type_template_id_696a593c_render,
-  StdInputvue_type_template_id_696a593c_staticRenderFns,
+  components_StdInputvue_type_script_lang_js_,
+  StdInputvue_type_template_id_5e1f1c17_render,
+  StdInputvue_type_template_id_5e1f1c17_staticRenderFns,
   false,
   null,
   null,
@@ -1468,7 +1835,7 @@ var StdInput_component = normalizeComponent(
 
 /* hot reload */
 if (false) { var StdInput_api; }
-StdInput_component.options.__file = "src/extensions/settings-win/StdInput.vue"
+StdInput_component.options.__file = "src/components/StdInput.vue"
 /* harmony default export */ const StdInput = (StdInput_component.exports);
 // CONCATENATED MODULE: ./src/extensions/settings-win/utils.js
 /* harmony default export */ const settings_win_utils = ({
@@ -1597,6 +1964,7 @@ var settings_win_main_Main = /*#__PURE__*/function () {
         case 'legend-button-click':
           var id = "SettingsWin-".concat(external_trading_vue_js_.Utils.uuid2());
           var args = e.args[0];
+          if (args.button !== 'settings') break;
 
           try {
             var ov = this.dc.data[args.type][args.dataIndex];
@@ -1672,12 +2040,42 @@ var settings_win_Pack = {
 
 
 
+
 var index_prod_Pack = {
   'chart-link': chart_link,
   'grid-resize': grid_resize,
+  'legend-buttons': legend_buttons,
   'settings-win': settings_win
 };
 /* harmony default export */ const index_prod = (index_prod_Pack);
+
+
+/***/ }),
+
+/***/ 90:
+/***/ ((module, exports, __webpack_require__) => {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(645);
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.id, "\n.tvjs-std-input {\n    margin: 5px;\n    background-color: #161b27;\n    border: 1px dotted #353940;\n    height: 22px;\n    border-radius: 3px;\n    padding: 2px 0px 3px 10px;\n    color: whitesmoke;\n    font-size: 1.2em;\n    outline: none;\n    width: 100px;\n}\nselect.tvjs-std-input {\n    height: 29px;\n    -moz-appearance: none;\n}\nselect.tvjs-std-input  {\n    //display: none; /*hide original SELECT element: */\n}\n.tvjs-std-input::placeholder {\n    color: #8e909a;\n    opacity: 0.25;\n}\n", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
+/***/ 486:
+/***/ ((module, exports, __webpack_require__) => {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(645);
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.id, "\n.tvjs-x-window {\n    position: absolute;\n    background: #1b202def;\n    border-radius: 3px;\n    pointer-events: all;\n    padding-left: 7px;\n    z-index: 100;\n    color: #dedddd;\n}\n.tvjs-x-window-head {\n    font-size: 2em;\n    user-select: none;\n    display: flex;\n    flex-direction: row;\n    flex-wrap: nowrap;\n    justify-content: flex-start;\n    align-content: center;\n    align-items: center;\n    height: 36px;\n    padding: 10px;\n    cursor: grab;\n}\n.tvjs-x-window-body {\n    padding: 10px;\n    font-size: 1.1em;\n}\n.tvjs-x-window-title {\n    width: 300px;\n    user-select: none;\n}\n.tvjs-x-window-close {\n    width: 26px;\n    cursor: pointer;\n    margin: -1em;\n    padding: 1em;\n    font-size: 0.75em;\n}\n", ""]);
+// Exports
+module.exports = exports;
 
 
 /***/ }),
@@ -1696,6 +2094,20 @@ module.exports = exports;
 
 /***/ }),
 
+/***/ 283:
+/***/ ((module, exports, __webpack_require__) => {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(645);
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.id, "\n.tvjs-x-window.add-win[data-v-53408ac7] {\n    padding-bottom: 30px;\n    border: 1px solid #80808011;\n}\n.add-win-list[data-v-53408ac7] {\n    height: 300px;\n    overflow-x: hidden;\n    overflow-y: auto;\n    user-select: none;\n}\n/* Hide scrollbar for Chrome, Safari and Opera */\n.add-win-list[data-v-53408ac7]::-webkit-scrollbar {\n  display: none;\n}\n\n/* Hide scrollbar for IE, Edge and Firefox */\n.add-win-list[data-v-53408ac7] {\n  -ms-overflow-style: none;  /* IE and Edge */\n  scrollbar-width: none;  /* Firefox */\n}\n.add-win-item[data-v-53408ac7] {\n    color: #ffffff88;\n    width: 100%;\n    padding: 5px;\n    cursor: pointer;\n}\n.add-win-item[data-v-53408ac7]:hover {\n    background: #88888822;\n    color: #ffffffff;\n}\n.add-win-item-desc[data-v-53408ac7] {\n    color: #ffffff33;\n    margin-left: 3px;\n}\n.add-win-item:hover .add-win-item-desc[data-v-53408ac7] {\n    color: #ffffff44;\n}\n.add-win-empty[data-v-53408ac7] {\n    opacity: 0.5;\n}\n", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
 /***/ 855:
 /***/ ((module, exports, __webpack_require__) => {
 
@@ -1704,34 +2116,6 @@ var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(645);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
 exports.push([module.id, "\n.tvjs-x-window.sett-win[data-v-5d223b0e] {\n    padding-bottom: 30px;\n    border: 1px solid #80808011;\n}\n.sett-win-item[data-v-5d223b0e] {\n    display: flex;\n    flex-direction: row;\n    flex-wrap: nowrap;\n    justify-content: flex-start;\n    align-content: center;\n    align-items: center;\n}\n.sett-win-item label[data-v-5d223b0e] {\n    min-width: 80px;\n    color: #35a776;\n}\n.sett-win-empty[data-v-5d223b0e] {\n    opacity: 0.5;\n}\n", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
-/***/ 250:
-/***/ ((module, exports, __webpack_require__) => {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(645);
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.id, "\n.std-input {\n    margin: 5px;\n    background-color: #161b27;\n    border: 1px dotted #353940;\n    height: 22px;\n    border-radius: 3px;\n    padding: 2px 0px 3px 10px;\n    color: whitesmoke;\n    font-size: 1.2em;\n    outline: none;\n    width: 100px;\n}\nselect.std-input {\n    height: 29px;\n    -moz-appearance: none;\n}\nselect.std-input  {\n    //display: none; /*hide original SELECT element: */\n}\n.std-input::placeholder {\n    color: #8e909a;\n    opacity: 0.25;\n}\n", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
-/***/ 569:
-/***/ ((module, exports, __webpack_require__) => {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(645);
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.id, "\n.tvjs-x-window {\n    position: absolute;\n    background: #1b202def;\n    border-radius: 3px;\n    pointer-events: all;\n    padding-left: 7px;\n}\n.tvjs-x-window-head {\n    font-size: 2em;\n    user-select: none;\n    display: flex;\n    flex-direction: row;\n    flex-wrap: nowrap;\n    justify-content: flex-start;\n    align-content: center;\n    align-items: center;\n    height: 36px;\n    padding: 10px;\n    cursor: grab;\n}\n.tvjs-x-window-body {\n    padding: 10px;\n    font-size: 1.1em;\n}\n.tvjs-x-window-title {\n    width: 300px;\n    user-select: none;\n}\n.tvjs-x-window-close {\n    width: 26px;\n    cursor: pointer;\n    margin: -1em;\n    padding: 1em;\n    font-size: 0.75em;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -1839,6 +2223,40 @@ function toComment(sourceMap) {
 
 /***/ }),
 
+/***/ 92:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(90);
+if(typeof content === 'string') content = [[module.id, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var add = __webpack_require__(346)/* .default */ .Z
+var update = add("c03f22ea", content, false, {});
+// Hot Module Replacement
+if(false) {}
+
+/***/ }),
+
+/***/ 144:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(486);
+if(typeof content === 'string') content = [[module.id, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var add = __webpack_require__(346)/* .default */ .Z
+var update = add("4007806b", content, false, {});
+// Hot Module Replacement
+if(false) {}
+
+/***/ }),
+
 /***/ 712:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -1856,6 +2274,23 @@ if(false) {}
 
 /***/ }),
 
+/***/ 153:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(283);
+if(typeof content === 'string') content = [[module.id, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var add = __webpack_require__(346)/* .default */ .Z
+var update = add("657d4da2", content, false, {});
+// Hot Module Replacement
+if(false) {}
+
+/***/ }),
+
 /***/ 209:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -1868,40 +2303,6 @@ if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
 var add = __webpack_require__(346)/* .default */ .Z
 var update = add("3692d5e9", content, false, {});
-// Hot Module Replacement
-if(false) {}
-
-/***/ }),
-
-/***/ 843:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(250);
-if(typeof content === 'string') content = [[module.id, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var add = __webpack_require__(346)/* .default */ .Z
-var update = add("5b4df3d1", content, false, {});
-// Hot Module Replacement
-if(false) {}
-
-/***/ }),
-
-/***/ 491:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(569);
-if(typeof content === 'string') content = [[module.id, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var add = __webpack_require__(346)/* .default */ .Z
-var update = add("4df018ba", content, false, {});
 // Hot Module Replacement
 if(false) {}
 
@@ -2259,7 +2660,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__103__;
 /******/ 	// module exports must be returned from runtime so entry inlining is disabled
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(192);
+/******/ 	return __webpack_require__(552);
 /******/ })()
 ;
 });
