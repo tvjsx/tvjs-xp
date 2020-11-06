@@ -4,8 +4,7 @@
 </div>
 
 
-# TVJS Std Extension Pack
-
+# TVJS Std Extension Pack ![npm](https://img.shields.io/npm/v/tvjs-xp.svg?color=brightgreen&label=version) ![license](https://img.shields.io/badge/license-MIT-blue.svg) ![size](https://img.shields.io/github/size/tvjsx/tvjs-xp/dist/tvjs-xp.min.js.svg)
 ```
 nmp i tvjs-xp
 ```
