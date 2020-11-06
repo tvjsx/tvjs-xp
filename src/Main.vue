@@ -171,13 +171,6 @@ body {
     top: 15px;
     right: 20px;
 }
-.std-input {
-    position: absolute;
-    top: 5px;
-    right: 70px;
-    width: 200px;
-    font-size: 1.2em;
-}
 .app-tags {
     position: absolute;
     top: 65px;

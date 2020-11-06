@@ -2,12 +2,13 @@
     <trading-vue :data="dc" :width="this.width" :height="this.height"
         title-txt="TVJS XP" :key="resetkey"
         ref="tvjs"
-        :legend-buttons="['settings', 'display']"
+        :legend-buttons="['display', 'settings', 'up', 'down', 'add', 'remove']"
         :chart-config="{DEFAULT_LEN:70}"
         :color-back="colors.colorBack"
         :color-grid="colors.colorGrid"
         :color-text="colors.colorText"
         :extensions="ext"
+        :overlays="ovs"
         :x-settings="xsett"
     />
 </template>
@@ -15,6 +16,7 @@
 
 import TradingVue from 'trading-vue-js'
 import { DataCube } from 'trading-vue-js'
+import Overlays from 'tvjs-overlays'
 import Data from '../../data/data.json'
 
 export default {
@@ -54,7 +56,8 @@ export default {
             height: window.innerHeight,
             xsett: {
                 'grid-resize': { min_height: 30 }
-            }
+            },
+            ovs: Object.values(Overlays)
         }
     }
 }

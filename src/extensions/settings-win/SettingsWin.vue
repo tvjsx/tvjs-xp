@@ -13,8 +13,8 @@
 </template>
 <script>
 
-import Window from './Window.vue'
-import StdInput from './StdInput.vue'
+import Window from '../../components/Window.vue'
+import StdInput from '../../components/StdInput.vue'
 import Utils from './utils.js'
 
 export default {

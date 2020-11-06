@@ -1,12 +1,12 @@
 <template>
     <span>
         <input v-if="type==='text' || !type"
-            :value="value" class="std-input"
+            :value="value" class="tvjs-std-input" :style="style"
             :placeholder="name"
             @change="$emit('change', $event.target.value)"
             @input="$emit('input', $event.target.value)">
         <select v-else-if="type==='select'"
-            class="std-input"
+            class="tvjs-std-input" :style="style"
             :value="value"
             @input="$emit('input', $event.target.value)">
             <option v-for="opt in list">{{opt}}</option>
@@ -17,8 +17,16 @@
 <script>
 export default {
     name: 'StdInput',
-    props: ['value', 'name', 'type', 'list'],
+    props: ['value', 'name', 'type', 'list', 'colors'],
     methods: {},
+    computed: {
+        style() {
+            return {
+                //background: this.$props.colors.back,
+                //color: this.$props.colors.text
+            }
+        }
+    },
     data() {
         return {
         }
@@ -27,7 +35,7 @@ export default {
 </script>
 
 <style>
-.std-input {
+.tvjs-std-input {
     margin: 5px;
     background-color: #161b27;
     border: 1px dotted #353940;
@@ -40,11 +48,18 @@ export default {
     width: 100px;
 }
 
-select.std-input {
+select.tvjs-std-input {
     height: 29px;
+    -moz-appearance: none;
+
 }
 
-.std-input::placeholder {
+select.tvjs-std-input  {
+    //display: none; /*hide original SELECT element: */
+}
+
+
+.tvjs-std-input::placeholder {
     color: #8e909a;
     opacity: 0.25;
 }

@@ -60,6 +60,8 @@ export default {
     border-radius: 3px;
     pointer-events: all;
     padding-left: 7px;
+    z-index: 100;
+    color: #dedddd;
 }
 .tvjs-x-window-head {
     font-size: 2em;
