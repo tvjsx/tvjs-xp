@@ -1,5 +1,5 @@
 /*!
- * TVJS Std Extension Pack - v0.2.0 - Fri Nov 06 2020
+ * TVJS Std Extension Pack - v0.2.1 - Fri Nov 06 2020
  *     https://github.com/tvjsx/tvjs-xp
  *     Copyright (c) 2020 c451 Code's All Right;
  *     Licensed under the MIT license
