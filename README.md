@@ -4,12 +4,15 @@
 </div>
 
 
-# TVJS Std Extension Pack ![npm](https://img.shields.io/npm/v/tvjs-xp.svg?color=brightgreen&label=version) ![license](https://img.shields.io/badge/license-MIT-blue.svg) ![size](https://img.shields.io/github/size/tvjsx/tvjs-xp/dist/tvjs-xp.min.js.svg)
+# TVJS Std Extension Pack ![npm](https://img.shields.io/npm/v/tvjs-xp.svg?color=brightgreen&label=version) ![license](https://img.shields.io/badge/license-MIT-blue.svg) ![size](https://img.shields.io/github/size/tvjsx/tvjs-xp/dist/tvjs-xp.min.js.svg) ![license](https://img.shields.io/badge/license-MIT-blue.svg) ![build](https://img.shields.io/badge/build-passing-brightgreen.svg)
 
 <div align="center">
   <img width="640" heigth="372" src="https://raw.githubusercontent.com/tvjsx/tvjs-xp/main/assets/showcase.gif" alt="tvjs-xp logo">
 </div>
 
+<br>
+
+## Install
 
 ```
 nmp i tvjs-xp
