@@ -5,14 +5,20 @@
  *     Licensed under the MIT license
  */
 (function webpackUniversalModuleDefinition(root, factory) {
+    if (!root['trading-vue-js']) {
+        root['trading-vue-js'] = root['TradingVueJs']
+    }
+    if (!root['vue']) {
+        root['vue'] = root['Vue']
+    }
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory(require("trading-vue-js"), require("vue"));
 	else if(typeof define === 'function' && define.amd)
 		define(["trading-vue-js", "vue"], factory);
 	else if(typeof exports === 'object')
-		exports["TvjsOverlays"] = factory(require("trading-vue-js"), require("vue"));
+		exports["TvjsXP"] = factory(require("trading-vue-js"), require("vue"));
 	else
-		root["TvjsOverlays"] = factory(root["trading-vue-js"], root["vue"]);
+		root["TvjsXP"] = factory(root["trading-vue-js"], root["vue"]);
 })(self, function(__WEBPACK_EXTERNAL_MODULE__954__, __WEBPACK_EXTERNAL_MODULE__103__) {
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({

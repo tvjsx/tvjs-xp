@@ -1,5 +1,6 @@
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const TerserPlugin = require('terser-webpack-plugin')
+const TvjsRef = require('./tvjs-ref-plugin.js')
 
 const webpack = require('webpack')
 const path = require('path')
@@ -25,7 +26,7 @@ let common = {
     output: {
         path: path.resolve(__dirname, '../dist'),
         filename: '[name].js',
-        library: 'TvjsOverlays',
+        library: 'TvjsXP',
         libraryTarget: 'umd',
         //libraryExport: "default"
     },
@@ -67,7 +68,8 @@ let common = {
         new VueLoaderPlugin(),
         new webpack.BannerPlugin({
             banner: BANNER
-        })
+        }),
+        new TvjsRef()
     ]
 }
 

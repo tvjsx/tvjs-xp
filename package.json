@@ -1,6 +1,6 @@
 {
   "name": "tvjs-xp",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Extension pack for trading-vue-js",
   "main": "./dist/tvjs-xp.js",
   "scripts": {
