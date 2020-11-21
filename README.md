@@ -49,6 +49,14 @@ export default {
     }
 }
 
+In browser:
+
+```js
+//...
+ext: Object.values(TvjsXP.default),
+//...
+```
+
 </script>
 
 ```
