@@ -48,6 +48,8 @@ export default {
         }
     }
 }
+
+</script>
 ```
 
 In browser:
@@ -56,8 +58,4 @@ In browser:
 //...
 ext: Object.values(TvjsXP.default),
 //...
-```
-
-</script>
-
 ```
