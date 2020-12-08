@@ -1,5 +1,5 @@
 /*!
- * TVJS Std Extension Pack - v0.2.2 - Sat Nov 21 2020
+ * TVJS Std Extension Pack - v0.3.0 - Tue Dec 08 2020
  *     https://github.com/tvjsx/tvjs-xp
  *     Copyright (c) 2020 c451 Code's All Right;
  *     Licensed under the MIT license
@@ -976,17 +976,22 @@ var main_Main = /*#__PURE__*/function () {
   }, {
     key: "ongrids",
     value: function ongrids() {
-      this.remove_widgets();
-      this.place_splitters();
+      var _this2 = this;
+
+      setTimeout(function () {
+        _this2.remove_widgets();
+
+        _this2.place_splitters();
+      });
     }
   }, {
     key: "onmousemove",
     value: function onmousemove(e) {
-      var _this2 = this;
+      var _this3 = this;
 
       // List of widgets created by this controller
       var list = this.tv.$refs.widgets.$children.filter(function (x) {
-        return x.main === _this2;
+        return x.main === _this3;
       });
 
       var _iterator = grid_resize_main_createForOfIteratorHelper(list),
@@ -1006,11 +1011,11 @@ var main_Main = /*#__PURE__*/function () {
   }, {
     key: "onmouseup",
     value: function onmouseup(e) {
-      var _this3 = this;
+      var _this4 = this;
 
       // List of widgets created by this controller
       var list = this.tv.$refs.widgets.$children.filter(function (x) {
-        return x.main === _this3;
+        return x.main === _this4;
       });
 
       var _iterator2 = grid_resize_main_createForOfIteratorHelper(list),
@@ -1030,11 +1035,11 @@ var main_Main = /*#__PURE__*/function () {
   }, {
     key: "onmouseleave",
     value: function onmouseleave(e) {
-      var _this4 = this;
+      var _this5 = this;
 
       // List of widgets created by this controller
       var list = this.tv.$refs.widgets.$children.filter(function (x) {
-        return x.main === _this4;
+        return x.main === _this5;
       });
 
       var _iterator3 = grid_resize_main_createForOfIteratorHelper(list),
@@ -1591,21 +1596,25 @@ var legend_buttons_main_Main = /*#__PURE__*/function () {
   }, {
     key: "add_overlay",
     value: function add_overlay(e) {
+      var preset = this.get_preset(e.type) || {};
+      if (preset.side) e.side = preset.side;
       var onchart = this.dc.data.onchart;
       var offchart = this.dc.data.offchart;
 
       if (e.side === 'onchart') {
         onchart.splice(e.index + 1, 0, {
+          name: preset.name,
           type: e.type,
           data: [],
-          settings: {}
+          settings: preset.settings || {}
         });
       } else {
         var h = this.avg_grid_h(offchart);
         offchart.splice(e.index + 1, 0, {
+          name: preset.name,
           type: e.type,
           data: [],
-          settings: {},
+          settings: preset.settings || {},
           grid: {
             height: h
           }
@@ -1613,6 +1622,19 @@ var legend_buttons_main_Main = /*#__PURE__*/function () {
       }
 
       this.dc.update_ids();
+    } // Get preset (default settings, colors) if defined
+
+  }, {
+    key: "get_preset",
+    value: function get_preset(type) {
+      var proto = this.tv.overlays.find(function (x) {
+        return x.name === type;
+      });
+
+      if (proto && proto.methods.meta_info) {
+        var meta = proto.methods.meta_info();
+        return meta.preset;
+      }
     } // Extension settings has changed
 
   }, {

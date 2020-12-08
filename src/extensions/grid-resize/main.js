@@ -51,8 +51,10 @@ export default class Main {
     onsettings(sett) {}
 
     ongrids() {
-        this.remove_widgets()
-        this.place_splitters()
+        setTimeout(() => {
+            this.remove_widgets()
+            this.place_splitters()
+        })
     }
 
     onmousemove(e) {

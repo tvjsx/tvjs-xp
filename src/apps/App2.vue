@@ -130,7 +130,7 @@ export default {
     top: calc(50% - 14px);
     left: calc(50% - 12px);
     cursor: pointer;
-    z-index: 100;
+    z-index: 1000;
     opacity: 0.9;
 }
 </style>

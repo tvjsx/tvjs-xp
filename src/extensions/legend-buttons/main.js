@@ -100,24 +100,37 @@ export default class Main {
 
     // Called from AddWin.vue
     add_overlay(e) {
+        let preset = this.get_preset(e.type) || {}
+        if (preset.side) e.side = preset.side
         let onchart = this.dc.data.onchart
         let offchart = this.dc.data.offchart
         if (e.side === 'onchart') {
             onchart.splice(e.index+1, 0, {
+                name: preset.name,
                 type: e.type,
                 data: [],
-                settings: {}
+                settings: preset.settings || {}
             })
         } else {
             let h = this.avg_grid_h(offchart)
             offchart.splice(e.index+1, 0, {
+                name: preset.name,
                 type: e.type,
                 data: [],
-                settings: {},
+                settings: preset.settings || {},
                 grid: {height: h}
             })
         }
         this.dc.update_ids()
+    }
+
+    // Get preset (default settings, colors) if defined
+    get_preset(type) {
+        let proto = this.tv.overlays.find(x => x.name === type)
+        if (proto && proto.methods.meta_info) {
+            let meta = proto.methods.meta_info()
+            return meta.preset
+        }
     }
 
     // Extension settings has changed
