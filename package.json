@@ -60,7 +60,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.1",
-    "trading-vue-js": "^0.10.0",
+    "trading-vue-js": "^1.0.0",
     "tvjs-overlays": "^0.3.0",
     "vue": "^2.6.12"
   }
