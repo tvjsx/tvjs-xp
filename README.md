@@ -15,7 +15,7 @@
 ## Install
 
 ```
-nmp i tvjs-xp
+npm i tvjs-xp
 ```
 
 ## List of extensions
