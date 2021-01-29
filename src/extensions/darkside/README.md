@@ -1,9 +1,9 @@
 # DarkSide Colors and Skin
 
-Before: The day/night pack
+##### Before: The day/night pack
 ![daypack](./daynightpack.png)
 
-After: The DarkSide
+##### After: The DarkSide
 ![darkside](./darkside.png)
 
 ## How to use
@@ -24,7 +24,7 @@ export default {
     components: { TradingVue },
     data() {
         return {
-            ext: XP.darkside,
+            ext: [XP.darkside],
             dc: new DataCube(...)
         }
     }
