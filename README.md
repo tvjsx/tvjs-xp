@@ -20,12 +20,13 @@ npm i tvjs-xp
 
 ## List of extensions
 
-| Name | Author | Type | Description | Version |
-|---|---|---|---|---|
-| chart-link | StdSquad | Ext | Sync multiple charts (cursors, drawing tools) | 1.0.0 |
-| grid-resize | StdSquad | Ext | Resize vertical sections | 1.0.0 |
-| legend-buttons | StdSquad | Ext | Moving overlays aroud, adding, removing | 1.0.0 |
-| settings-win | StdSquad | Ext | Changing script props (settings) | 1.0.0 |
+| Name | Author | Type | Description | Version | Info |
+|---|---|---|---|---|---|
+| chart-link | StdSquad | Ext | Sync multiple charts (cursors, drawing tools) | 1.0.0 | |
+| darkside | ZeroBug | Skin | Dark theme | 1.0.0 | [README](./src/extensions/darkside/README.md) |
+| grid-resize | StdSquad | Ext | Resize vertical sections | 1.0.0 | |
+| legend-buttons | StdSquad | Ext | Moving overlays aroud, adding, removing | 1.0.0 | |
+| settings-win | StdSquad | Ext | Changing script props (settings) | 1.0.0 | |
 
 ## Usage
 
