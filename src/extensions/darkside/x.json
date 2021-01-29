@@ -1,0 +1,11 @@
+{
+    "name": "darkside",
+    "author": "ZeroBug",
+    "version": "1.0.0",
+    "components": [],
+    "widgets": [],
+    "overlays": [],
+    "skins": ["darkside.js"],
+    "colorpacks": ["darkside.json"],
+    "deps": {}
+}
