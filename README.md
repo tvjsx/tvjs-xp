@@ -35,7 +35,7 @@ npm i tvjs-xp
 </template>
 <script>
 
-import TradingVue from 'trading-vue-js'
+import { TradingVue, DataCube} from 'trading-vue-js'
 import XP from 'tvjs-xp'
 
 export default {
@@ -44,7 +44,8 @@ export default {
     data() {
         return {
             ext: Object.values(XP),
-            dc: new DataCube(...)
+            dc: new DataCube(...) 
+            //Data given as an argument
         }
     }
 }
