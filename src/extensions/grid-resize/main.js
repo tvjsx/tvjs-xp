@@ -122,8 +122,8 @@ export default class Main {
 
     // Grid defining overlays
     grid_ovs() {
-        let list = [this.dc.data.chart]
-        for (var ov of this.dc.data.offchart) {
+        let list = this.dc.data?  [this.dc.data.chart]: [this.dc.chart];
+        for (var ov of this.dc.data ? this.dc.offchart : this.dc.offchart) {
             if (!ov.grid || ov.grid.id === undefined) {
                 list.push(ov)
             }
